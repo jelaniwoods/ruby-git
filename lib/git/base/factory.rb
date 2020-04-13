@@ -36,9 +36,10 @@ module Git
         Git::Object.new(self, objectish, 'tree')
       end
       
+      # TODO what is better, g.log(count: 30, all: true) or g.log(nil, all: true)? 
       # returns a Git::Log object with count commits
-      def log(count = 30)
-        Git::Log.new(self, count)
+      def log(count = 30, opts = {})
+        Git::Log.new(self, { :count => count }.merge!(opts))
       end
       
       # returns a Git::Object of the appropriate type
