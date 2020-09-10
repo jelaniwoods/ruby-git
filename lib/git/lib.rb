@@ -132,17 +132,18 @@ module Git
       arr_opts << '--pretty=oneline'
 
       arr_opts += log_path_options(opts)
-
+      p "log commits #{arr_opts}"
       command_lines('log', arr_opts, true).map { |l| l.split.first }
     end
-
+    
     def full_log_commits(opts={})
       arr_opts = log_common_options(opts)
-
+      
       arr_opts << '--pretty=raw'
       arr_opts << "--skip=#{opts[:skip]}" if opts[:skip]
-
+      
       arr_opts += log_path_options(opts)
+      p "FULL log commits #{arr_opts}"
 
       full_log = command_lines('log', arr_opts, true)
 
@@ -1024,6 +1025,8 @@ module Git
 
       arr_opts << "-#{opts[:count]}" if opts[:count]
       arr_opts << "--no-color"
+      arr_opts << "--#{opts[:all]}" if true#opts[:all]
+      arr_opts << "--#{opts[:graph]}" if true#opts[:graph]
       arr_opts << "--since=#{opts[:since]}" if opts[:since].is_a? String
       arr_opts << "--until=#{opts[:until]}" if opts[:until].is_a? String
       arr_opts << "--grep=#{opts[:grep]}" if opts[:grep].is_a? String
